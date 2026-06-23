@@ -1,10 +1,12 @@
 package api_Endpoints;
 
 import api_payload.User;
+
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.*;
+
 
 public class UserEndPoints {
 
