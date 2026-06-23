@@ -9,6 +9,8 @@ import io.restassured.http.ContentType;
 public class PetEndpoints {
 
 	public static Response createuser(Pets payload) {
+		
+		System.out.println(Routes.post_url);
 
 		Response response = given().contentType(ContentType.JSON).accept(ContentType.JSON).body(payload).when()
 				.post(Routes.post_url);
@@ -17,26 +19,26 @@ public class PetEndpoints {
 
 	}
 
-	public static Response getUser(Pets payload, int id) {
+	public static Response getUser(int id) {
+		
+		System.out.println(Routes.get_url);
 
-		Response response = given().contentType(ContentType.JSON).accept(ContentType.JSON).pathParam("id", id)
-				.body(payload).when().get(Routes.get_url + id);
+		Response response = given().pathParam("petId", id).when().get(Routes.get_url);
 
 		return response;
 	}
 
 	public static Response updateUser(Pets payload, int id) {
 
-		Response response = given().contentType(ContentType.JSON).accept(ContentType.JSON).pathParam("id", id)
-				.body(payload).when().put(Routes.update_url + id);
+		Response response = given().contentType(ContentType.JSON).accept(ContentType.JSON).pathParam("petId", id)
+				.body(payload).when().put(Routes.update_url);
 
 		return response;
 	}
 
-	public static Response deleteUser(Pets payload, int id) {
+	public static Response deleteUser(int id) {
 
-		Response response = given().contentType(ContentType.JSON).accept(ContentType.JSON).pathParam("id", id)
-				.body(payload).when().post(Routes.delete_url + id);
+		Response response = given().pathParams("petId", id).when().delete(Routes.delete_url);
 
 		return response;
 	}

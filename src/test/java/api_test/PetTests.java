@@ -2,8 +2,9 @@ package api_test;
 
 import java.util.Arrays;
 
+
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.github.javafaker.Faker;
@@ -22,7 +23,7 @@ public class PetTests {
 	Category category;
 	Tags tags;
 
-	@BeforeMethod
+	@BeforeClass
 	public void setUpData() {
 
 		faker = new Faker();
@@ -33,13 +34,13 @@ public class PetTests {
 
 		tags = new Tags();
 
-		category.setId(faker.idNumber().hashCode());
+		category.setId(faker.number().numberBetween(1000, 9999));
 		category.setName(faker.animal().name());
 
-		tags.setId(faker.idNumber().hashCode());
+		tags.setId(faker.number().numberBetween(1000, 9999));
 		tags.setName(faker.animal().name());
 
-		pet.setId(faker.idNumber().hashCode());
+		pet.setId(faker.number().numberBetween(1000, 9999));
 		pet.setCategory(category);
 		pet.setName(faker.name().name());
 		pet.setPhotoURLs(Arrays.asList("photos.png"));
@@ -66,7 +67,7 @@ public class PetTests {
 
 		Log.logger.info("Retreving pet");
 
-		Response response = PetEndpoints.getUser(pet, this.pet.getId());
+		Response response = PetEndpoints.getUser(this.pet.getId());
 
 		response.then().log().all();
 
@@ -80,7 +81,7 @@ public class PetTests {
 
 		Log.logger.info("update a user");
 
-		Response response = PetEndpoints.getUser(pet, this.pet.getId());
+		Response response = PetEndpoints.updateUser(pet, this.pet.getId());
 
 		response.then().log().all();
 
@@ -92,7 +93,7 @@ public class PetTests {
 
 		Log.logger.info("Deleting a user");
 
-		Response response = PetEndpoints.deleteUser(pet, this.pet.getId());
+		Response response = PetEndpoints.deleteUser(this.pet.getId());
 
 		response.then().log().all();
 
